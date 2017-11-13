@@ -1,8 +1,8 @@
-# grumblr - A full-stack micro-blogging website
+# gr****** - A full-stack micro-blogging website
 **Author:** Stephen Xie  
 **Project Version:** 6.0.0
 
-grumblr is a Django-based full-stack micro-blogging website. It's a featureful, near-production-ready web application that supports user registration and authentication, email integration, photo upload, and dynamic quasi-real-time updates.
+gr****** is a Django-based full-stack micro-blogging website. It's a featureful, near-production-ready web application that supports user registration and authentication, email integration, photo upload, and dynamic quasi-real-time updates.
 
 Detailed documentations to be added later...
 
