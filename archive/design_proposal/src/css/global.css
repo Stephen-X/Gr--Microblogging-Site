@@ -1,0 +1,95 @@
+/*
+Author: Stephen Xie <[redacted]@cmu.edu>
+*/
+
+.main-body {  /* place content below navbar after signed in */
+    min-height: 75rem;
+    padding-top: 3.5rem;
+    background-color: #fafafa;
+}
+
+.card .avatar {  /* position avatar in the profile card view */
+    position: relative;
+    top: -50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -60px;
+}
+
+.avatar-img {  /* crop and style raw avatar image */
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.message-avatar {  /* a quick hack to shrink avatars in message cards a little bit */
+    width: 80px;
+    height: auto;
+}
+
+.msg-box {  /* properties for message sending box on the right; keep the same as msg-card below */
+    padding-top: 1rem;
+    min-width: 49rem;
+    max-width: 49rem;
+}
+
+.msg-box .card-body {
+    padding: 0.2rem 0.2rem;
+}
+
+.msg-box .text-box {  /* text box inside the message sending card fills the column */
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+}
+
+.msg-box .col {  /* buttons are aligned right */
+    display: flex;
+    padding-left: 0.5rem;
+    justify-content: space-around;
+}
+
+.msg-card {  /* properties for message cards on the right */
+    padding-top: 1rem;
+    min-width: 49rem;
+    max-width: 49rem;
+}
+
+.msg-card .card {  /* add padding to the inner side of card */
+    padding-right: 1rem;
+}
+
+.msg-photos img {  /* properties for pictures included in a message */
+    max-width: 12.5rem;
+    min-width: 12.5rem;
+    padding: 0.5rem;
+    margin: auto;
+}
+
+.msg-card-func {  /* for the buttons in the message card */
+    padding-top: 0.5rem;
+}
+.msg-card-func a {
+    font-size: 1rem;
+}
+
+/* links are in black color with no underlines at all times by default */
+a,
+a:focus,
+a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
+/* add back underline to email link in footer when hovering over it */
+footer a:focus, footer a:hover {
+    text-decoration: underline;
+}

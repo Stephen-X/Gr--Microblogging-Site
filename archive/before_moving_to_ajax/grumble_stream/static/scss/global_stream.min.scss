@@ -1,0 +1,53 @@
+/*
+Author: Stephen Xie <[redacted]@cmu.edu>
+Version: 1.0.0
+*/
+
+.profile-card {
+  width: 17rem;  /* TODO: make it responsive (stretched to full screen width) for smaller screens */
+
+  .avatar-container { /* position avatar in the profile card view */
+    position: relative;
+    top: -50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -60px;
+
+    .avatar {
+      width: 100px;
+      height: auto;
+    }
+  }
+
+  .card-body {
+    text-align: center;
+
+    .row {  /* the statistics info wrapper */
+      padding-top: 0.5rem;
+    }
+  }
+
+}
+
+.msg-post {  /* properties for message post box on the right; keep the same as msg-card */
+  min-width: 49rem;
+  max-width: 49rem;
+  margin-bottom: 1rem;
+
+  .card-body {
+    padding: 0.2rem 0.2rem;
+  }
+
+  .text-box {  /* text box inside the message sending card fills the column */
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+  }
+
+  .col {  /* buttons are aligned right */
+    display: flex;
+    padding-left: 0.5rem;
+    justify-content: space-around;
+  }
+
+}

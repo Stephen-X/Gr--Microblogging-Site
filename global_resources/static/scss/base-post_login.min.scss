@@ -1,0 +1,268 @@
+/*
+Author: Stephen Xie <[redacted]@cmu.edu>
+*/
+
+// margin width for navbar-expand-lg
+$collapse-width-lg: 575px;
+$search-bar-color: #6E7B87;
+
+/* web fonts */
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+
+.navbar {
+  background-color: #607D8B;
+
+  .navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    padding: 0;
+  }
+
+  .nav-input-group {
+    position: relative;  /* required so that the icon can be placed on top of input */
+
+    width: 100%;
+
+    padding-left: 10px;
+    padding-right: 20px;
+
+    @media screen and (max-width: $collapse-width-lg) {
+      /* when the input group is collapsed, leave some room between it and the toggle button */
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    .icon {
+      position: absolute;
+      color: $search-bar-color;
+      top: 13%;
+      z-index: 1;
+      margin-left: 12px;
+
+      ///* add a separate line to the right*/
+      //border-right: solid 1px;
+      //border-color: $search-bar-color;
+      //padding-right: 10px;
+
+    }
+
+    input {
+      border: none;
+      background-color: #F5F5F5;
+      padding-left: 47px;  /* make room for the icon */
+      padding-right: 40px;  /* and the menu button as well */
+
+      @media screen and (min-width: 900px) {
+        min-width: 500px;
+      }
+      @media screen and (max-width: 900px) {
+        /* input area takes full screen width when collapsed */
+        min-width: 100%;
+      }
+
+      /* add transition effect when background color changes */
+      -webkit-transition: background .55s ease;
+      -moz-transition: background .55s ease;
+      -ms-transition: background .55s ease;
+      -o-transition: background .55s ease;
+      transition: background .55s ease;
+    }
+
+    input:hover,
+    input:focus,
+    input:active {
+      /* background of input area should be white when active */
+      background-color: #FFFFFF;
+    }
+
+    a {
+      background: none;
+      border: none;
+      outline: none;
+      color: $search-bar-color;
+      z-index: 1;
+
+      // placed inside the right-hand side of the input box
+      float: right;
+      margin-right: 10px;
+      margin-top: -26px;
+    }
+
+    a:hover,
+    a:focus,
+    a:active {
+      text-decoration: none;
+    }
+  }
+}
+
+.main-body {  /* place content below navbar after signed in */
+  min-height: 75rem;
+  padding-top: 3.5rem;
+  background-color: #fafafa;
+}
+
+.main-container {
+  margin-top: 1rem;  /* main content of the site stays a bit away from the navbar */
+
+  .col-lg-4 {
+    padding-left: 5rem;
+    /* TODO: make column responsive (inner content stretched to full screen width INSTEAD) for smaller screens */
+  }
+
+  .col-lg-6 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    /* TODO: make column responsive (inner content stretched to full screen width INSTEAD) for smaller screens */
+
+    /* add margin to the top when this column wraps beneath the previous one */
+    @media screen and (max-width: 62rem) {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.avatar {  /* crop and style raw avatar image */
+  /* the original avatar image should be in square shape, with side length no smaller than 120px. */
+  width: 120px;
+  height: 120px;
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;  /* make it round! */
+  border: 2px solid white;
+}
+
+.border-left {  /* used to add a thin separator between cells */
+  border-left: 1px solid lightgray;
+}
+
+// for message cards and message posting box
+@mixin dynamic-card-width() {
+  /* adjust card width according to screen width */
+  @media screen and (max-width: 62rem) {
+    /* when the container column (col-lg-6) is wrapped, card takes full screen width until it's too narrow */
+    min-width: 35rem;
+    max-width: 100%;
+  }
+  @media screen and (min-width: 62rem){
+    /* when the container column is not wrapped, card width is fixed */
+    width: 49rem;
+  }
+}
+
+.msg-post {  /* properties for message post box on the right; keep the same as msg-card */
+  @include dynamic-card-width();
+  margin-bottom: 0.5rem;
+
+  .card-body {
+    padding: 0.2rem 0.2rem;
+  }
+
+}
+
+.msg-card {  /* properties for message cards on the right */
+  margin-bottom: 1rem;
+  padding-right: 1rem;  /* add padding to card's inner right side */
+  @include dynamic-card-width();
+
+  .avatar {
+    width: 80px;
+    height: auto;
+    margin-right: 1rem;
+  }
+
+  .date {
+    text-align: right;
+  }
+
+  .card-text {  /* main content */
+    text-align: justify;
+  }
+
+  .photos {
+    padding-top: 1rem;
+
+    img {  /* properties for pictures included in a message */
+      width: 12.5rem;
+      height: auto;
+      padding: 0.5rem;
+      margin: auto;
+    }
+  }
+
+  .func-bar {  /* i.e. buttons near the bottom of the message card */
+    padding-top: 0.5rem;
+
+    .col-2 {  /* for each button */
+      padding-right: 5rem;
+
+      a {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .comment-field {  /* comment area at the bottom of the message card */
+    padding-top: 0.5rem;
+    padding-bottom: 0;
+
+    .comment-list {
+      padding-top: 0.4rem;
+
+      .comment {
+        border-top: 1px solid lightgray;
+        margin-top: 0.2rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+
+        .avatar {
+          width: 50px;
+          margin-right: 0;
+        }
+
+        .avatar-col {
+          display: table-column;
+          text-align: left;
+        }
+
+        .text-col {
+          display: table-column;
+          min-width: 80%;
+
+          .title {
+            .name {
+              font-weight: bold;
+              text-align: left;
+            }
+            .date {
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+/* links are in black color with no underlines at all times by default */
+a,
+a:focus,
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+
+  /* add back underline to email link in footer when hovering over it */
+  a:focus,
+  a:hover {
+    text-decoration: underline;
+  }
+
+}

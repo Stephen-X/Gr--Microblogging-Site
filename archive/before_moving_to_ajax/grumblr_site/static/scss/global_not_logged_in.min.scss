@@ -1,0 +1,107 @@
+/*
+Stylesheet for interfaces users will access when they're not logged in.
+
+Author: Stephen Xie <[redacted]@cmu.edu>
+Version: 1.1.0
+*/
+
+$main-container-width: 24rem;
+
+html {  /* background settings */
+  height: 100%;
+}
+
+body {
+  @extend html;
+  /* font properties */
+  color: white;
+  text-align: center;
+  text-shadow: 1px 1px 2px #444;
+}
+
+.site-wrapper {
+  display: table;  /* this element behaves like a <table> element */
+  /* site content always fills the entire window area */
+  width: 100%;
+  height: 100%;
+  /* add a nice shadow effect around the site window
+     - inset: shadow is cast inside
+     - horizontal offset
+     - vertical offset
+     - blur radius
+   */
+  -webkit-box-shadow: inset 0 0 5rem rgba(0, 0, 0, .7);
+  -moz-box-shadow: inset 0 0 5rem rgba(0, 0, 0, .7);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .7);
+  /* darken background image a little bit by adding a 20% transparent black background */
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.site-wrapper-inner {
+  display: table-cell;  /* the element behave like a <td> element */
+  vertical-align: middle;
+}
+
+.main-container {  /* place in the middle horizontally */
+  margin-left: auto;
+  margin-right: auto;
+  width: $main-container-width;
+}
+
+.inner {
+  padding: 2rem;
+}
+
+.input-box {
+  padding-bottom: 0.5rem;
+
+  input {  /* for each input cell */
+    padding: 10px 10px;
+    width: 250px;
+    border: 1px solid gray;
+  }
+
+}
+
+.btn_container {
+  padding-top: 0.5rem;
+
+  a, button {  /* width of buttons should be equal to that of input cells */
+    width: 250px;
+  }
+
+  a {
+    text-shadow: none;
+  }
+}
+/* first button moves a bit away from text boxes */
+.first_btn {
+  padding-top: 1rem;
+}
+
+/* footer stays at the bottom of the page */
+.footer_container {
+  bottom: 0;
+  width: $main-container-width;  /* keep as the same width as the main container */
+
+  /* starting from this screen height (about the same height as the first inner container
+   in the registration page), footer will always sticks to the bottom of the window */
+  @media screen and (min-height: 40rem) {
+    position: fixed;
+  }
+}
+
+
+/* links are in white color at all times for this page */
+a,
+a:focus,
+a:hover {
+  color: white;
+}
+
+#error_modal {
+  /* override font settings from body */
+  color: black;
+  text-align: left;
+  text-shadow: none;
+}

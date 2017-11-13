@@ -1,0 +1,237 @@
+<!DOCTYPE html>  <!-- this is an HTML5 document -->
+<!--
+    Global stream page of the grumblr site.
+    This is just a static demonstration of how the site will look like.
+
+    Author: Stephen Xie <[redacted]@cmu.edu>
+    Version: 1.1.0
+ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- this web page will be responsive and properly scaled on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="grumblr global stream page">
+    <meta name="author" content="Stephen Tse">
+
+    <title>grumblr | Global</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap-4.0.0-beta.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="css/font-awesome-4.7.0.min.css">
+    <!-- zoom.js for zooming pictures -->
+    <link rel="stylesheet" href="css/zoom.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/global.css">
+</head>
+
+<body class="main-body">
+<!--
+    Top navigation bar of the site.
+    navbar-expand-sm: the content of the navbar will expand from its collapsed form when this page is viewed
+                      from a screen of small size or larger.
+-->
+<nav class="navbar navbar-dark bg-info navbar-expand-sm fixed-top">
+    <!-- site logo -->
+    <a class="navbar-brand" href="global_stream.html">
+        g
+    </a>
+    <!-- the button that will show up when the navbar content collapses;
+         aria-***: HTML5 ARIA for screen readers. -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- content that will collapse in small screens -->
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <!-- mr-auto: shorthand for "margin-right: auto"; Flexbox property to add margin to the right of the list -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Global</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="profile.html">Profile</a>
+            </li>
+        </ul>
+
+        <form action="index.html" class="form-inline">
+            <button class="btn btn-dark" type="submit">Sign Out</button>
+        </form>
+    </div>
+</nav>
+
+<!-- use bootstrap container & grid to set the page's layout -->
+<div class="container">
+    <div class="row">
+        <!-- col-lg-*: a responsive grid that starts out stacked on smaller size devices before becoming
+                       horizontal on large devices.-->
+        <div class="col-lg-4" style="padding-top: 1rem;">
+            <!-- profile card -->
+            <div class="card" style="width: 17rem">
+                <img class="card-img-top" src="images/profile-pic%20900x506.jpg" alt="Card image">
+                <a class="avatar" href="profile.html">
+                    <img class="avatar-img" alt="Avatar" src="images/enlightened-aaron-the-godslayer-avatar.jpg">
+                </a>
+                <div class="card-body" style="text-align: center">
+                    <a href="profile.html"><h4 class="card-title">Covfefe Godslayer</h4></a>
+                    <p class="card-text">Did someone just call me?</p>
+                    <div class="row no-gutters" style="padding-top: 0.5rem">
+                        <a class="col" href="profile.html">
+                            Grumbles<br>
+                            <strong>2</strong>
+                        </a>
+                        <a class="col" href="profile.html" style="border-left: 1px solid lightgray">
+                            Favorites<br>
+                            <strong>3</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <!-- message post box -->
+            <div class="msg-box">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="" method="post">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-10">
+                                    <input class="text-box" type="text" name="new_message" placeholder="New Message" required autofocus>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#add_pic_2_new_msg">
+                                        <i class="fa fa-camera"></i>
+                                    </button>
+                                    <button class="btn btn-outline-secondary" type="submit">Send!</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- modal for adding new pictures -->
+            <div class="modal fade" id="add_pic_2_new_msg" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add new photos</h5>
+                            <button type="button" class="close" data-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            Function to be implemented.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- message view without pictures -->
+            <div class="msg-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-start">
+                            <a href="profile.html" class="col-auto"  style="padding-right: 1.5rem">
+                                <img class="card-img avatar-img message-avatar" src="images/Benedict-Cumberbatch-540x540.jpg" alt="avatar">
+                            </a>
+
+                            <div class="col">
+                                <div class="row no-gutters">
+                                    <div class="col">
+                                        <a href="profile.html"><h4 class="card-title">Benedict Cumberbatch</h4></a>
+                                    </div>
+                                    <div class="col-3" style="text-align: right;">2 min</div>
+                                </div>
+
+                                <div class="row no-gutters">
+                                    <p class="card-text" style="text-align: justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis sapien purus, et elementum sapien porttitor in. Suspendisse potenti. Aenean et elementum libero. Nunc interdum lorem arcu, a volutpat ipsum aliquam in. Cras consequat lectus at tellus ultrices, a ultricies felis aliquet. Nunc molestie mi a neque efficitur tempus. Donec vitae orci vitae nisi bibendum euismod sit amet at odio. Fusce cursus quam eu ligula vestibulum, eget pharetra lacus porttitor.</p>
+                                </div>
+
+                                <!-- message card function bar -->
+                                <div class="row no-gutters msg-card-func">
+                                    <div class="col-2">
+                                        <a class="btn btn-default btn-sm" href="#">
+                                            <i class="fa fa-heart"></i> LIKE</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <a class="btn btn-default btn-sm" href="#">
+                                            <i class="fa fa-retweet fa-lg"></i> SHARE</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- message view with pictures -->
+            <div class="msg-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-start">
+                            <a href="profile.html" class="col-auto" style="padding-right: 1.5rem">
+                                <img class="card-img avatar-img message-avatar" src="images/robert-downey-jr-500x536.jpg" alt="avatar">
+                            </a>
+                            <div class="col">
+                                <div class="row no-gutters">
+                                    <div class="col">
+                                        <a href="profile.html"><h4 class="card-title">Robert Downey Jr.</h4></a>
+                                    </div>
+                                    <div class="col-3" style="text-align: right;">3 min</div>
+                                </div>
+
+                                <div class="row no-gutters">
+                                    <p class="card-text" style="text-align: justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis sapien purus, et elementum sapien porttitor in. Suspendisse potenti. Aenean et elementum libero. Nunc interdum lorem arcu, a volutpat ipsum aliquam in. Cras consequat lectus at tellus ultrices, a ultricies felis aliquet. Nunc molestie mi a neque efficitur tempus. Donec vitae orci vitae nisi bibendum euismod sit amet at odio. Fusce cursus quam eu ligula vestibulum, eget pharetra lacus porttitor.</p>
+                                </div>
+
+                                <!-- pictures sent with this message -->
+                                <div class="msg-photos" style="padding-top: 1rem">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-auto">
+                                            <img src="images/4000000000238126%201920x1080.jpg" alt="photo" data-action="zoom">
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <img src="images/6000000000248792%201920x1080.jpg" alt="photo" data-action="zoom">
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <img src="images/6000000000262536%201920x1080.jpg" alt="photo" data-action="zoom">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- message card function bar -->
+                                <div class="row no-gutters msg-card-func">
+                                    <div class="col-2">
+                                        <a class="btn btn-default btn-sm" href="#">
+                                            <i class="fa fa-heart"></i> LIKE</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <a class="btn btn-default btn-sm" href="#">
+                                            <i class="fa fa-retweet fa-lg"></i> SHARE</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<footer>&copy; 2017 Stephen Tse &lt;<a href="mailto:[redacted]@cmu.edu">[redacted]@cmu.edu</a>&gt;</footer>
+
+<!-- Bootstrap JavaScript; jQuery must come first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.2.1.slim.min.js"></script>
+<script src="js/popper-1.11.0.min.js"></script>
+<script src="js/bootstrap-4.0.0-beta.min.js"></script>
+<!-- zoom.js for zooming pictures -->
+<script src="js/zoom.min.js"></script>
+</body>
+</html>

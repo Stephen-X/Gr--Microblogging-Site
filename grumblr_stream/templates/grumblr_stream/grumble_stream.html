@@ -1,0 +1,65 @@
+{% extends "base-post_login.html" %}
+{% comment %}
+    Global stream page of the grumblr site.
+    Check settings.py for location of the global template directory.
+{% endcomment %}
+
+{# description in page metadata #}
+{% block page_description %}grumblr global stream page{% endblock %}
+
+{% block page_title %}grumblr | Global{% endblock %}
+
+{% load static %}
+{% block page_style %}  {# additional styles for this page #}
+    <link rel="stylesheet" href="{% static "css/global_stream.min.css" %}">
+{% endblock %}
+
+{# this will highlight the link of this page in navbar #}
+{% block is_global_active %}
+    {% if is_global_view %}active{% endif %}
+{% endblock %}
+{% block is_following_active %}
+    {% if is_following_view %}active{% endif %}
+{% endblock %}
+
+{% block page_scripts %}
+    <!-- script for loading messages dynamically -->
+    <!-- data-view is a customized attribute to pass view name to the script file -->
+    {% if is_global_view %}
+        <script type="text/javascript" src="{% static "js/grumbles_control.js" %}" id="grumbles-ctrl" data-view="global"></script>
+    {% elif is_following_view %}
+        <script type="text/javascript" src="{% static "js/grumbles_control.js" %}" id="grumbles-ctrl" data-view="following"></script>
+    {% endif %}
+{% endblock %}
+
+{% block content_left %}
+    <!-- profile card -->
+    <div class="card profile-card">
+        <img class="card-img-top" src="{% static "images/profile-pic%20900x506.jpg" %}" alt="Card image">
+        <a class="avatar-container" href="{% url 'profile' %}">
+            <img class="avatar" alt="Avatar" src="{{ request.user.ext.avatar.url }}">
+        </a>
+        <div class="card-body">
+            <a href="{% url 'profile' %}">
+                <h4 class="card-title">{{ request.user.first_name }} {{ request.user.last_name }}</h4>
+            </a>
+            <p class="card-text">{{ user.ext.signature }}</p>
+            <div class="row no-gutters">
+                <a class="col" href="{% url 'profile' %}">
+                    Grumbles<br>
+                    <strong id="total-grumbles">{{ total_grumbles }}</strong>
+                </a>
+                <a class="col border-left" href="{% url 'profile' %}">
+                    Followers<br>
+                    <strong>{{ total_followers }}</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block message_post %}
+    {% if is_global_view %}  {# since it makes no sense to show the posting box on following view #}
+        {% include "message_post.html" %}
+    {% endif %}
+{% endblock %}

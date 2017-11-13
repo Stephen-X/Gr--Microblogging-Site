@@ -1,0 +1,112 @@
+/*
+Author: Stephen Xie <[redacted]@cmu.edu>
+Version: 1.0.0
+*/
+
+$profile-cover-height: 22rem;
+$shadow-config: 1px 1px 2px #444;
+
+.profile-pic {
+  background: url('../images/profile-pic 1920x1080.jpg') no-repeat center;
+  position: fixed;
+  width: 100%;
+  height: $profile-cover-height; /* maintain the same height as jumbotron */
+  z-index: -1;  /* this will be beneath jumbotron */
+}
+
+.edit-button,
+.edit-button:hover,
+.edit-button:focus,
+.edit-button:active {
+  /* stick to the top right side of the screen */
+  position: absolute;
+  top: 4.2rem;
+  right: 0.5rem;
+  z-index: 0;  /* place at front of profile picture */
+
+  /* only shows an icon; remove all colors and outlines */
+  color: white;
+  opacity: 0.7;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  text-shadow: $shadow-config;
+
+  font-size: 2.5rem;  // controls icon size (the fa-2x class is just setting this to 2em)
+
+}
+.edit-button:hover {
+  opacity: 0.9;
+
+}
+
+/* styles for the edit profile menu */
+.option {
+  margin-bottom: 1rem;
+
+  .card {
+    margin-top: 8px;
+
+    p {  /* for helper text */
+      font-size: small;
+    }
+  }
+}
+
+
+/* profile heading */
+.jumbotron {
+  height: $profile-cover-height;
+  background: transparent;  /* hide jumbotron background and use profile-pic instead */
+
+  /* text properties */
+  color: white;
+  text-shadow: $shadow-config;
+  text-align: center;
+
+}
+
+#unfollow-btn {
+  color: red;
+}
+
+.info-card {
+  width: 18rem;
+  margin-bottom: 1.5rem;
+
+  .card-body {
+    text-align: center;
+  }
+}
+
+/* style personal info table */
+.personal-info {
+  @extend .info-card;
+
+  .card-body {
+    .row {
+      padding-bottom: 0.5rem;
+
+      strong {
+        text-align: right;
+        padding-right: 0.5rem;
+      }
+
+      span {
+        text-align: left;
+        padding-left: 0.5rem;
+      }
+    }
+
+  }
+
+}
+
+.bio-card {
+  @extend .info-card;
+  margin-bottom: auto;  /* the last card on the left doesn't need margin at the bottom */
+
+  p {
+    text-align: center;
+  }
+}

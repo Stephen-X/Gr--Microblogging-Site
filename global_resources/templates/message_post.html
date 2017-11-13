@@ -1,0 +1,38 @@
+{% comment %}
+    This implements the message post box. Include this template to anywhere needed.
+{% endcomment %}
+<!-- message post box -->
+<div class="card msg-post">
+    <div class="card-body">
+        <!-- HTML form is not required here, as the posting logic is handled by grumbles_control.js -->
+        <div class="row no-gutters align-items-center input-group">
+            <input class="form-control" id="autofocus_field" type="text" name="message" placeholder="New Message" required autofocus>
+            <span class="input-group-btn">
+                    <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#add_pic_modal">
+                        <i class="fa fa-camera"></i>
+                    </button>
+                    <button class="btn btn-outline-secondary" id="msg-sent-btn" type="submit">Send!</button>
+                </span>
+        </div>
+
+    </div>
+</div>
+<!-- modal for adding new pictures -->
+<div class="modal fade" id="add_pic_modal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add new photos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Function to be implemented.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

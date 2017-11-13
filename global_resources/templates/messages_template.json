@@ -1,0 +1,17 @@
+{% comment %}
+JSON template for messages retrieval APIs.
+{% endcomment %}
+{
+  "last_updated": "{{ last_updated }}",
+  {# date: "c" converts date into ISO 8601 format. e.g. 2008-01-02T10:30:00.000123+02:00 #}
+
+  "messages": [
+    {% for message in messages %}
+      {% spaceless %}  {# removes whitespace, tab or newline between HTML tags (makes it into one line) #}
+        {% include 'message_template.json' %}  {# renders the 'message_template.json' template #}
+      {% endspaceless %}
+      {% if not forloop.last %}, {% endif %}  {# if this is not the last for loop iteration, add delimiter "," #}
+    {% endfor %}
+  ]
+
+}

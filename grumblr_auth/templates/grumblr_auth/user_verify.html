@@ -1,0 +1,23 @@
+{% extends "base-auth.html" %}
+{% comment %}
+    Email verification page for new user registration.
+    Note that user shouldn't see this page if verification is successful.
+{% endcomment %}
+
+{% block page_description %}User email authentication{% endblock %}
+
+{% block page_title %}User Email Authentication Error | Grumblr Authentication Center{% endblock %}
+
+{% block content %}
+    {% if errors %}
+        <h3>We had an error when authenticating your email address:</h3>
+        <br>
+        <ul>
+            {% for error in errors %}
+                <li>{{ error | escape }}</li>  {# escape filter is used to escape a string's HTML #}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You entered this page by mistake.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% comment %}
+JSON template for comment retrieval APIs.
+{% endcomment %}
+{
+    "message_id": "{{ message_id }}",
+    "last_updated": "{{ last_updated }}",
+    {# date: "c" converts date into ISO 8601 format. e.g. 2008-01-02T10:30:00.000123+02:00 #}
+    "comments": [
+        {% for comment in comments %}
+            {% spaceless %}  {# removes whitespace, tab or newline between HTML tags (makes it into one line) #}
+                "{{ comment.html | safe }}"  {# html is a python property of Comment; see models.py for more info #}
+            {% endspaceless %}
+            {% if not forloop.last %}, {% endif %}  {# if this is not the last for loop iteration, add delimiter ',' #}
+        {% endfor %}
+    ]
+}

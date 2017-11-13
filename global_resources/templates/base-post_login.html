@@ -1,0 +1,287 @@
+{% comment %}
+    Template for pages accessible after user logged in (global stream & profile page).
+    These pages share the same navbar and footer.
+{% endcomment %}
+<!DOCTYPE html>  <!-- this is an HTML5 document -->
+<!--
+    Author: Stephen Xie <[redacted]@cmu.edu>
+    Version: 1.3.0
+ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- this web page will be responsive and properly scaled on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{% block page_description %}{% endblock %}">
+    <meta name="author" content="Stephen Tse">
+
+    <title>{% block page_title %}{% endblock %}</title>
+
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
+    <!-- zoom.js for zooming pictures -->
+    <link rel="stylesheet" href="{% static "css/zoom.css" %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static "css/base-post_login.min.css" %}">
+    {# additional styles for individual pages #}
+    {% block page_style %}{% endblock %}
+
+    {# use humanize to convert message time to a more readable format; imported in settings.py #}
+    {% load humanize %}
+</head>
+
+<body class="main-body">
+<!--
+    Top navigation bar of the site.
+    navbar-expand-sm: the content of the navbar will expand from its collapsed form when this page is viewed
+                      from a screen of small size or larger.
+-->
+<nav class="navbar navbar-dark bg-info navbar-expand-sm fixed-top">
+    <!-- site logo -->
+    <a class="navbar-brand" href="{% url 'home' %}">
+        g
+    </a>
+    <!-- the button that will show up when the navbar content collapses;
+         aria-***: HTML5 ARIA for screen readers. -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- content that will collapse in small screens -->
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <!-- mr-auto: shorthand for "margin-right: auto"; Flexbox property to add margin to the right of the list -->
+        <ul class="navbar-nav mr-auto">
+            {# individual pages may override one block with class "active" (no quotes) to highlight that link in navbar #}
+            <li class="nav-item {% block is_global_active %}{% endblock %}">
+                <a class="nav-link" href="{% url 'home' %}">Global</a>
+            </li>
+            <li class="nav-item {% block is_following_active %}{% endblock %}">
+                <a class="nav-link" href="{% url 'following' %}">Following</a>
+            </li>
+            <li class="nav-item {% block is_profile_active %}{% endblock %}">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <!-- search bar; actual function to be implemented -->
+            <li class="nav-item">
+                <div class="nav-input-group">
+                    <span class="icon"><i class="fa fa-lg fa-search"></i></span>
+                    <input class="form-control" type="search" placeholder="Search global users and grumbles" aria-label="Search">
+                    <a href="#" class="button fa fa-bars fa-lg"></a>
+                </div>
+            </li>
+        </ul>
+
+        <a class="btn btn-dark" href="{% url 'logout' %}">Sign Out</a>
+    </div>
+</nav>
+
+{# cover picture for the profile page #}
+{% block profile_cover %}{% endblock %}
+
+<!-- main content; use bootstrap container & grid to set the page's layout -->
+<div class="row main-container">
+    <!-- col-lg-*: a responsive grid that starts out stacked on smaller size devices before becoming
+                   horizontal on large devices.-->
+    <div class="col-lg-4">
+        {% block content_left %}{% endblock %}
+    </div>
+
+    <div class="col-lg-6">
+        {# message post box #}
+        {% block message_post %}{% endblock %}
+
+        <!-- message cards appear here; it's rendered dynamically by JS script -->
+        <div id="messages-stream"></div>
+
+    </div>
+</div>
+
+<footer>&copy; 2017 Stephen Tse &lt;<a href="mailto:[redacted]@cmu.edu">[redacted]@cmu.edu</a>&gt;</footer>
+
+<!-- Bootstrap JavaScript; jQuery must come first, then Popper.js, then Bootstrap JS -->
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/popper.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+<!-- zoom.js for zooming pictures -->
+<script type="text/javascript" src="{% static "js/zoom.min.js" %}"></script>
+<script type="text/javascript">
+    // enable all bootstrap tooltips on this page
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
+{# additional scripts for individual pages #}
+{% block page_scripts %}{% endblock %}
+<!-- comments should be the last to load -->
+<script type="text/javascript" src="{% static "js/comments_control.js" %}"></script>
+
+{# shows error messages if there're any #}
+{% if errors %}
+    <!-- define the notification modal -->
+    <div class="modal fade focus" id="error_modal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">INFO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error | escape }}</li>  {# escape filter is used to escape a string's HTML #}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- then trigger it using jQuery -->
+    <script type="text/javascript" src="{% static "js/toggle-error-modal.js" %}"></script>
+{% endif %}
+
+{# add more modals in this block #}
+{% block modals %}{% endblock %}
+</body>
+</html>
+
+{% comment "Message card template with text only" %}
+<div class="card msg-card">
+    <div class="card-body">
+        <div class="row no-gutters align-items-start">
+            {# profile url of this user will be something like /profile/username #}
+            <a href="{% url 'profile' %}{{ message.user.username }}" class="col-auto">
+                <img class="avatar" src="{{ message.user.ext.avatar.url }}" alt="avatar">
+            </a>
+
+            <div class="col">
+                <div class="row no-gutters">
+                    <div class="col">
+                        <a href="{% url 'profile' %}{{ message.user.username }}">
+                            <h4 class="card-title">{{ message.user.first_name }} {{ message.user.last_name }}</h4>
+                        </a>
+                    </div>
+                    <div class="col-5 date">{{ message.date | naturaltime }}</div>
+                </div>
+
+                <div class="row no-gutters">
+                    <p class="card-text">{{ message.message }}</p>
+                </div>
+
+                <!-- message card function bar -->
+                <div class="row no-gutters func-bar">
+                    <div class="col-2">
+                        <a class="btn btn-default btn-sm" href="#">
+                            <i class="fa fa-heart"></i> LIKE</a>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-default btn-sm" href="#">
+                            <i class="fa fa-retweet fa-lg"></i> SHARE</a>
+                    </div>
+                </div>
+
+                <div class="comment-field">
+                    <!-- comment input field -->
+                    <div class="row no-gutters align-items-center input-group">
+                        <!-- HTML form is not required here, as the posting logic is handled by comments_control.js -->
+                        <input class="form-control comment-input" type="text" name="comment" placeholder="Comment this post" required>
+                        <span class="input-group-btn">
+                                                    <button class="btn btn-secondary comment-sent-btn" type="submit">Send!</button>
+                                                </span>
+                    </div>
+
+                    <!-- comment display area
+                    Note that comments will not be refreshed automatically, although it's suggested
+                    by the assignment handout: think about a page of many posts; checking comment
+                    updates for each post will be like DDOSing our server! And it will also
+                    consume a lot of resources on the client side. -->
+                    <div class="comment-list">
+                        {% if message.cmts %}
+                            {% for comment in message.cmts.all %}
+                                <div class="row no-gutters comment">
+                                    <div class="avatar-col">
+                                        <a href="{% url 'profile' %}{{ comment.from_user.username }}" class="col-auto">
+                                            <img class="avatar" src="{{ comment.from_user.ext.avatar.url }}" alt="avatar">
+                                        </a>
+                                    </div>
+                                    <div class="text-col">
+                                        <div class="row no-gutters title">
+                                            <div class="col-7 name">{{ comment.from_user.first_name }} {{ comment.from_user.last_name }} ({{ comment.from_user.username }})</div>
+                                            <div class="col-5 date">{{ comment.date }}</div>
+                                        </div>
+                                        <div class="row no-gutters">
+                                            {{ comment.content }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endcomment %}
+{% comment "Message card template with pictures" %}
+<div class="card msg-card">
+    <div class="card-body">
+        <div class="row no-gutters align-items-start">
+            <a href="{% url 'profile' %}" class="col-auto">
+                <img class="avatar" src="{% static "images/robert-downey-jr-500x536.jpg" %}" alt="avatar">
+            </a>
+
+            <div class="col">
+                <div class="row no-gutters">
+                    <div class="col">
+                        <a href="{% url 'profile' %}"><h4 class="card-title">Robert Downey Jr.</h4></a>
+                    </div>
+                    <div class="col-5 date">3 min</div>
+                </div>
+
+                <div class="row no-gutters">
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis sapien purus, et elementum sapien porttitor in. Suspendisse potenti. Aenean et elementum libero. Nunc interdum lorem arcu, a volutpat ipsum aliquam in. Cras consequat lectus at tellus ultrices, a ultricies felis aliquet. Nunc molestie mi a neque efficitur tempus. Donec vitae orci vitae nisi bibendum euismod sit amet at odio. Fusce cursus quam eu ligula vestibulum, eget pharetra lacus porttitor.</p>
+                </div>
+
+                <!-- pictures sent with this message -->
+                <div class="photos">
+                    <div class="row no-gutters">
+                        <div class="col-md-auto">
+                            <img src="{% static "images/4000000000238126%201920x1080.jpg" %}" alt="photo" data-action="zoom">
+                        </div>
+                        <div class="col-md-auto">
+                            <img src="{% static "images/6000000000248792%201920x1080.jpg" %}" alt="photo" data-action="zoom">
+                        </div>
+                        <div class="col-md-auto">
+                            <img src="{% static "images/6000000000262536%201920x1080.jpg" %}" alt="photo" data-action="zoom">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- message card function bar -->
+                <div class="row no-gutters func-bar">
+                    <div class="col-2">
+                        <a class="btn btn-default btn-sm" href="#">
+                            <i class="fa fa-heart"></i> LIKE</a>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-default btn-sm" href="#">
+                            <i class="fa fa-retweet fa-lg"></i> SHARE</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endcomment %}

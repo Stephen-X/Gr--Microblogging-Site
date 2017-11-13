@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAKA,SACK,CACH,gBAAgB,CAAE,yDAAyD",
+"sources": ["../scss/registration.min.scss"],
+"names": [],
+"file": "registration.min.css"
+}

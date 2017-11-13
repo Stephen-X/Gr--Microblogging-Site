@@ -1,0 +1,254 @@
+{% extends "global_logged_in.html" %}
+{% comment %}
+    User profile page of the grumblr site.
+    Check settings.py for location of the global template directory.
+{% endcomment %}
+
+{# description in page metadata #}
+{% block page_description %}grumblr profile page{% endblock %}
+
+{% block page_title %}grumblr | Profile{% endblock %}
+
+{% load static %}
+{% block page_style %}  {# additional styles for this page #}
+    <link rel="stylesheet" href="{% static "css/profile.min.css" %}">
+{% endblock %}
+{% block page_scripts %}  {# additional scripts for this page #}
+    <script src="{% static "js/parallax_jumbotron.js" %}"></script>
+{% endblock %}
+
+{# this will highlight the link of this page in navbar #}
+{% block is_profile_active %}active{% endblock %}
+
+{% block profile_cover %}
+<!-- profile cover -->
+<!-- button on the top right side of the profile cover  -->
+{% if user == request.user %}
+    {# if the user this profile belongs to is the current user, display the edit profile button, otherwise the follow button #}
+    <span data-toggle="modal" data-target="#edit_modal">
+        <!-- wrap the button like this so that we can apply both bootstrap modal and bootstrap tooltip -->
+        <button class="edit-button fa fa-cog" type="button" data-toggle="tooltip" data-placement="left" title="Edit your profile"></button>
+    </span>
+{% else %}
+    <form method="post">
+        {% if is_following %}
+            <button class="edit-button fa fa-gratipay" type="submit" data-toggle="tooltip" data-placement="left"
+                    title="Unfollow this user" name="unfollow" id="unfollow-btn"></button>
+        {% else %}
+            <button class="edit-button fa fa-gratipay" type="submit" data-toggle="tooltip" data-placement="left"
+                    title="Follow this user" name="follow"></button>
+        {% endif %}
+        {% csrf_token %}
+    </form>
+{% endif %}
+
+<div class="profile-pic"></div>
+<div class="jumbotron">
+    <img class="avatar" alt="Avatar" src="{{ user.ext.avatar.url }}">
+    <h1>{{ user.first_name }} {{ user.last_name }} <span>({{ user.username }})</span></h1>
+    <!-- lead: a bootstrap typography that makes a paragraph stand out -->
+    <p class="lead">{{ user.ext.signature }}</p>
+</div>
+{% endblock %}
+
+{% block content_left %}
+    <!-- statistics card -->
+    <div class="card info-card">
+        <div class="card-body">
+            <div class="row no-gutters">
+                <a class="col">
+                    Grumbles<br>
+                    <strong>{{ total_grumbles }}</strong>
+                </a>
+                <a class="col border-left">
+                    Followers<br>
+                    <strong>{{ total_followers }}</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- personal info card -->
+    <div class="card personal-info">
+        <div class="card-body">
+            <h6 class="card-title">
+                Personal Information
+            </h6>
+            <hr>  <!-- a thematic line break -->
+            <div class="row">
+                <strong class="col">Gender</strong>
+                {# .get_gender_display will display the gender field choice in human readable format #}
+                <span class="col">{{ user.ext.get_gender_display }}</span>
+            </div>
+            <div class="row">
+                <strong class="col">Age</strong>
+                <span class="col">{{ user.ext.age }}</span>
+            </div>
+            <div class="row">
+                <strong class="col">Hometown</strong>
+                <span class="col">{{ user.ext.hometown }}</span>
+            </div>
+            <div class="row">
+                <strong class="col">Hobby</strong>
+                <span class="col">{{ user.ext.hobby }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- biography card -->
+    <div class="card bio-card">
+        <div class="card-body">
+            <h6 class="card-title">
+                Biography
+            </h6>
+            <hr>  <!-- a thematic line break -->
+            <p>{{ user.ext.bio }}</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modals %}
+    {# used for editing profile information and changing password #}
+    <div class="modal fade focus" id="edit_modal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">What would you like to do?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div id="menuAccordion" data-children=".option">
+
+                        <!-- Option for changing user passwords -->
+                        <div class="option">
+                            <a class="btn btn-block btn-outline-dark" data-toggle="collapse" data-parent="#menuAccordion" href="#changePassword" aria-expanded="false" aria-controls="changePassword">
+                                Change my password
+                            </a>
+
+                            <div id="changePassword" class="collapse" role="tabpanel">
+                                <div class="card card-body">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <!-- row: the content of the form group is organized horizontally -->
+                                        <div class="form-group row">
+                                            <label for="static-username" class="col-sm-3 col-form-label">Username</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" readonly class="form-control" id="static-username" value="{{ user.username }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="autofocus_field" class="col-sm-3 col-form-label">Password</label>
+                                            <div class="col-sm-9">
+                                                {% comment %}
+                                                <input type="password" class="form-control" id="autofocus_field" placeholder="New Password" autofocus required>
+                                                {% endcomment %}
+                                                {{ pw_form.password }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="password-confirm" class="col-sm-3 col-form-label">Confirm</label>
+                                            <div class="col-sm-9">
+                                                {{ pw_form.password_confirm }}
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <a class="btn btn-block btn-outline-dark" data-toggle="collapse" data-parent="#menuAccordion" href="#changeProfile" aria-expanded="false" aria-controls="changeProfile">
+                                Change my profile
+                            </a>
+
+                            <div id="changeProfile" class="collapse" role="tabpanel">
+                                <div class="card card-body">
+                                    <!-- multipart/form-data allows file encoding in HTML forms -->
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <p class="form-text text-muted">
+                                            Please only modify fields that you'd like to change.
+                                        </p>
+
+                                        <div class="form-group">
+                                            <label for="avatar-upload">Upload a new avatar</label>
+                                            {% comment %}
+                                            <input type="file" class="form-control-file" id="avatar-upload">
+                                            {% endcomment %}
+                                            {{ profile_ext_form.avatar }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="autofocus_field">First Name</label>
+                                            {{ profile_form.first_name }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="last_name">Last Name</label>
+                                            {{ profile_form.last_name }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="signature">Signature</label>
+                                            {{ profile_ext_form.signature }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email address</label>
+                                            {% comment %}
+                                            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                            {% endcomment %}
+                                            {{ profile_form.email }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="gender">Gender</label>
+                                            {% comment %}
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                            {% endcomment %}
+                                            {{ profile_ext_form.gender }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="age">Age</label>
+                                            {% comment %}
+                                            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                            {% endcomment %}
+                                            {{ profile_ext_form.age }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="hometown">Hometown</label>
+                                            {{ profile_ext_form.hometown }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="hobby">Hobby</label>
+                                            {{ profile_ext_form.hobby }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bio">Bio</label>
+                                            {% comment %}
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            {% endcomment %}
+                                            {{ profile_ext_form.bio }}
+                                        </div>
+                                        {{ profile_ext_form.user_info_mod }}
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% comment %}
+JSON template for a single message.
+{% endcomment %}
+{
+  "id": {{ message.id }},
+  "html": "{{ message.html | safe }}"  {# html is a python property of Message; see models.py for more info #}
+}

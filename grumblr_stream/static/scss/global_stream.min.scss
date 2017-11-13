@@ -1,0 +1,30 @@
+/*
+Author: Stephen Xie <[redacted]@cmu.edu>
+Version: 1.0.0
+*/
+
+.profile-card {
+  width: 17rem;  /* TODO: make it responsive (stretched to full screen width) for smaller screens */
+
+  .avatar-container { /* position avatar in the profile card view */
+    position: relative;
+    top: -50px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -60px;
+
+    .avatar {
+      width: 100px;
+      height: auto;
+    }
+  }
+
+  .card-body {
+    text-align: center;
+
+    .row {  /* the statistics info wrapper */
+      padding-top: 0.5rem;
+    }
+  }
+
+}

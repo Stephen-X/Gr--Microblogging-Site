@@ -1,0 +1,93 @@
+{% comment %}
+    Template for pages accessible before user logged in (login & registration page).
+{% endcomment %}
+<!DOCTYPE HTML>  <!-- this is an HTML5 document -->
+<!--
+    Author: Stephen Xie <[redacted]@cmu.edu>
+    Version: 1.3.0
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- this web page will be responsive and properly scaled on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{% block page_description %}{% endblock %}">
+    <meta name="author" content="Stephen Tse">
+
+    <title>{% block page_title %}{% endblock %}</title>
+
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static "css/base-pre_login.min.css" %}">
+    {# additional styles for individual pages #}
+    {% block page_style %}{% endblock %}
+</head>
+
+<body>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="main-container">
+            <div class="inner">
+                <h1>grumblr</h1>
+                <p class="lead">{% block body_subtitle %}{% endblock %}</p>
+                <form id="user_login_form" method="post">
+                    {# forms that user must fill in #}
+                    {% block body_forms %}{% endblock %}
+
+                    <!-- Used by Django for Cross Site Request Forgery protection -->
+                    {% csrf_token %}
+                </form>
+
+                {# buttons for redirecting users between login and registration / password reset pages #}
+                {% block body_redirection %}{% endblock %}
+
+            </div>
+
+            <div class="footer_container inner">
+                <footer>&copy; 2017 Stephen Tse &lt;<a href="mailto:[redacted]@cmu.edu">[redacted]@cmu.edu</a>&gt;</footer>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript; jQuery must come first, then Popper.js, then Bootstrap JS -->
+<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/popper.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+
+{# shows error messages if there're any #}
+{% if errors %}
+    <!-- define the notification modal -->
+    <div class="modal fade focus" id="error_modal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">INFO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error | escape }}</li>  {# escape filter is used to escape a string's HTML #}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- then trigger it using jQuery -->
+    <script type="text/javascript" src="{% static "js/toggle-error-modal.js" %}"></script>
+{% endif %}
+</body>
+</html>

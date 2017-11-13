@@ -1,0 +1,50 @@
+/*
+Author: Stephen Xie <[redacted]@cmu.edu>
+
+Thanks to Ryan Fait for the sticky footer implementation:
+https://stackoverflow.com/questions/5189238/how-to-make-a-footer-fixed-in-the-page-bottom
+*/
+
+$footer-height: 4rem;
+
+html,
+body {
+  height: 100%;
+}
+
+.main-body {
+  background-color: #fafafa;
+}
+
+.main-container {
+  min-height: 88%;
+  height: auto !important;
+  height: 88%;
+  margin-top: 1.5rem;  /* main content of the site stays a bit away from the navbar */
+  margin-bottom: -$footer-height;
+
+  padding-left: 3rem;
+  padding-right: 3rem;
+
+}
+
+.room_for_footer {
+  height: $footer-height;
+}
+
+footer {
+  height: $footer-height;
+  /* make sure the padding is added within the total height */
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  text-align: center;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:focus,
+  a:hover {
+    color: black;
+  }
+}

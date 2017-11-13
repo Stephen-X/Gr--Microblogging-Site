@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>  <!-- this is an HTML5 document -->
+<!--
+    Sign-up page of the grumblr site.
+    This is just a static demonstration of how the site will look like.
+
+    Author: Stephen Xie <[redacted]@cmu.edu>
+    Version: 1.1.0
+ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- this web page will be responsive and properly scaled on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="grumblr sign-up page">
+    <meta name="author" content="Stephen Tse">
+
+    <title>grumblr | Sign Up</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap-4.0.0-beta.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="css/font-awesome-4.7.0.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/registration.css">
+</head>
+
+<body>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="main-container">
+            <div class="inner">
+                <h1>grumblr</h1>
+                <p class="lead">Blog. Share. Discover. Instantly.</p>
+                <form action="global_stream.html" method="post">
+                    <!-- autocomplete: indicates whether the value of the control can be automatically completed by the browser;
+                         autofocus: specifies that a form control should have input focus when the page loads;
+                         required: specifies that the user must fill in a value before submitting a form. -->
+                    <div class="input-box">
+                        <input type="text" name="firstname" placeholder="First name" required autofocus>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" name="lastname" placeholder="Last name" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" name="username" placeholder="Username" autocomplete="username" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password" placeholder="Password" autocomplete="new-password" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="confirm-pass" placeholder="Confirm password" required>
+                    </div>
+
+                    <div style="padding-top: 0.5rem">
+                        <button id="signup_btn" class="btn btn-info" type="submit">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+            <div class="mastfoot inner">
+                <footer>&copy; 2017 Stephen Tse &lt;<a href="mailto:[redacted]@cmu.edu">[redacted]@cmu.edu</a>&gt;</footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript; jQuery must come first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.2.1.slim.min.js"></script>
+<script src="js/popper-1.11.0.min.js"></script>
+<script src="js/bootstrap-4.0.0-beta.min.js"></script>
+</body>
+</html>

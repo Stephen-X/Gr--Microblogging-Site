@@ -1,0 +1,120 @@
+/*
+Author: Stephen Xie <[redacted]@cmu.edu>
+*/
+
+.main-body {  /* place content below navbar after signed in */
+  min-height: 75rem;
+  padding-top: 3.5rem;
+  background-color: #fafafa;
+}
+
+.main-container {
+  margin-top: 1rem;  /* main content of the site stays a bit away from the navbar */
+
+  .col-lg-4 {
+    padding-left: 5rem;
+    /* TODO: make column responsive (inner content stretched to full screen width INSTEAD) for smaller screens */
+  }
+
+  .col-lg-6 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    /* TODO: make column responsive (inner content stretched to full screen width INSTEAD) for smaller screens */
+
+    /* add margin to the top when this column wraps beneath the previous one */
+    @media screen and (max-width: 62rem) {
+      margin-top: 1rem;
+    }
+  }
+}
+
+.avatar {  /* crop and style raw avatar image */
+  /* the original avatar image should be in square shape, with side length no smaller than 120px. */
+  width: 120px;
+  height: 120px;
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;  /* make it round! */
+  border: 2px solid white;
+}
+
+.border-left {  /* used to add a thin separator between cells */
+  border-left: 1px solid lightgray;
+}
+
+.msg-card {  /* properties for message cards on the right */
+  margin-bottom: 1rem;
+  padding-right: 1rem;  /* add padding to card's inner right side */
+
+  /* adjust card width according to screen width */
+  @media screen and (max-width: 62rem) {
+    /* when the container column (col-lg-6) is wrapped, card takes full screen width until it's too narrow */
+    min-width: 35rem;
+    max-width: 100%;
+  }
+  @media screen and (min-width: 62rem){
+    /* when the container column is not wrapped, card width is fixed */
+    width: 49rem;
+  }
+
+  .avatar {
+    width: 80px;
+    height: auto;
+    margin-right: 1rem;
+  }
+
+  .date {
+    text-align: right;
+  }
+
+  .card-text {  /* main content */
+    text-align: justify;
+  }
+
+  .photos {
+    padding-top: 1rem;
+
+    img {  /* properties for pictures included in a message */
+      width: 12.5rem;
+      height: auto;
+      padding: 0.5rem;
+      margin: auto;
+    }
+  }
+
+  .func-bar {  /* i.e. buttons at the bottom of the message card */
+    padding-top: 0.5rem;
+
+    .col-2 {  /* for each button */
+      padding-right: 5rem;
+
+      a {
+        font-size: 1rem;
+      }
+    }
+
+  }
+
+}
+
+
+/* links are in black color with no underlines at all times by default */
+a,
+a:focus,
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+
+  /* add back underline to email link in footer when hovering over it */
+  a:focus,
+  a:hover {
+    text-decoration: underline;
+  }
+
+}
