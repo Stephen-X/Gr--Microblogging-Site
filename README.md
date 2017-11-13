@@ -23,10 +23,10 @@ Detailed documentations to be added later...
 
 ## Pre-registered accounts
 
-    | Username | Password | Note                     |
-    |----------|----------|--------------------------|
-    | admin    | admin    | Is Project Administrator |
-    | jon      | jon      |                          |
-    | steve    | steve    |                          |
-    | seth     | seth     |                          |
-    | john     | john     |                          |
+| Username | Password | Note                     |
+|----------|----------|--------------------------|
+| admin    | admin    | Is Project Administrator |
+| jon      | jon      |                          |
+| steve    | steve    |                          |
+| seth     | seth     |                          |
+| john     | john     |                          |
