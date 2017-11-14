@@ -1,4 +1,4 @@
-# gr****** Site Prototype
+# gr***** Site Prototype
 **Author:** Stephen Xie \<[redacted]@cmu.edu\>  
 **Project Version:** 1.1.0
 
