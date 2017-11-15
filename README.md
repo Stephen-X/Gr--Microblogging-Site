@@ -6,9 +6,15 @@ gr***** is a Django-based full-stack micro-blogging website. It's a featureful, 
 
 Detailed documentations to be added later.
 
-**Quick note:** before someone mentions it again, yes I do know about the bad positioning of the follow / unfollow button ;p
 
-**Another quick note:** I used the Django shell (`manage.py shell`) to test my models during development. I should have utilized the unit testing tools from Django to standardize and automate the testing process. My bad...
+## Quick Notes
+
+- before someone mentions it again, yes I do know about the bad positioning of the follow / unfollow button ;p
+
+- I used the Django shell (`manage.py shell`) to test my models during development. I should have utilized the unit testing tools from Django to standardize and automate the testing process. My bad...
+
+- Heroku automatically collects static files during deployment, so you don't have to worry about that. Otherwise run `python manage.py collectstatic` to collects them to STATIC_ROOT after the debug mode is switched off. More info on [Django](https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/).
+
 
 ## Screenshots
 

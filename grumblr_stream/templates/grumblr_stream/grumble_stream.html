@@ -35,7 +35,7 @@
 {% block content_left %}
     <!-- profile card -->
     <div class="card profile-card">
-        <img class="card-img-top" src="{% static "images/profile-pic%20900x506.jpg" %}" alt="Card image">
+        <img class="card-img-top" src="{% static "images/profile-pic_900x506.jpg" %}" alt="Card image">
         <a class="avatar-container" href="{% url 'profile' %}">
             <img class="avatar" alt="Avatar" src="{{ request.user.ext.avatar.url }}">
         </a>

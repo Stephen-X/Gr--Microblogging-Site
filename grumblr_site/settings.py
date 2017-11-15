@@ -80,7 +80,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # WhiteNoise is used to serve static files in production mode;
     # check its documentation for setup details
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    # 'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'grumblr_site.urls'
@@ -124,7 +124,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
     # save cloud storage URL to environment variable
-    # use PostgreSQL over SQLite
+    # just supply a PostgreSQL remote URI to an environment variable
+    # 'DATABASE_URL', and comment out the above 'default' code
     # 'default': dj_database_url.config(
     #     default=config('DATABASE_URL')
     # )
@@ -178,7 +179,6 @@ STATICFILES_DIRS = [
 # must configure wsgi.py first
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 # URL that handles the media served from MEDIA_ROOT, used for managing stored files
 MEDIA_URL = '/media/'
 # absolute filesystem path to the directory that will hold user-uploaded files
@@ -190,6 +190,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'global_resources/media')
 # AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 # AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 # DEFAULT_FILE_STORAGE = 'webapps.custom_storages.MediaStorage'
+# ref for the two lines below: https://github.com/jschneier/django-storages/issues/28#issuecomment-265876674
+# AWS_S3_REGION_NAME = 'us-east-2'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+# enable the line below if you'd like to collect your static files
+# to S3 as well
+# STATICFILES_STORAGE = 'webapps.custom_storages.StaticFilesStorage'
 
 
 # URL to use if the authentication system requires a user to log in
