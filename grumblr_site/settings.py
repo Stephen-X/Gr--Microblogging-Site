@@ -189,13 +189,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'global_resources/media')
 # AWS_STORAGE_BUCKET_NAME = config('S3_BUCKET')
 # AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 # AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-# DEFAULT_FILE_STORAGE = 'webapps.custom_storages.MediaStorage'
+# DEFAULT_FILE_STORAGE = 'grumblr_site.custom_storages.MediaStorage'
 # ref for the two lines below: https://github.com/jschneier/django-storages/issues/28#issuecomment-265876674
 # AWS_S3_REGION_NAME = 'us-east-2'
 # AWS_S3_SIGNATURE_VERSION = 's3v4'
 # enable the line below if you'd like to collect your static files
 # to S3 as well
-# STATICFILES_STORAGE = 'webapps.custom_storages.StaticFilesStorage'
+# STATICFILES_STORAGE = 'grumblr_site.custom_storages.StaticFilesStorage'
 
 
 # URL to use if the authentication system requires a user to log in
