@@ -87,7 +87,7 @@ class Message(models.Model):
                             <!-- comment input field -->
                             <div class='row no-gutters align-items-center input-group'>
                                 <!-- HTML form is not required here, as the posting logic is handled by comments_control.js -->
-                                <input class='form-control comment-input' type='text' name='comment' placeholder='Comment this post' required>
+                                <input class='form-control comment-input' type='text' name='comment' maxlength='42' placeholder='Comment this post' required>
                                 <span class='input-group-btn'>
                                     <button class='btn btn-secondary comment-sent-btn' type='submit'>Send!</button>
                                 </span>

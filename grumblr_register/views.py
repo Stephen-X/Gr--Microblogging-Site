@@ -112,12 +112,11 @@ def __send_confirmation_email(request, new_user, errors):
     # generat an email token for this new user
     token = default_token_generator.make_token(new_user)
 
-    email_body = """
-    Welcome to the grumblr site. Please click the link below to verify your email address
-    and complete your registration: http://%s%s%s
-    """.strip() % (request.get_host(),
-                   reverse('user_verify'),
-                   "?username=" + new_user.username + "&token=" + token)
+    email_body = 'Welcome to the grumblr site! Please click the link below to verify your email address and complete ' \
+                 'your registration:\nhttp://%s%s%s\n\n\nThe Grumblr Admin team\n'.strip() % (
+                     request.get_host(),
+                     reverse('user_verify'),
+                     "?username=" + new_user.username + "&token=" + token)
 
     send_mail(subject='Verify your email address',
               message=email_body,
