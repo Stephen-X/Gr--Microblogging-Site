@@ -9,7 +9,7 @@ Detailed documentations to be added later.
 
 ## Quick Notes
 
-- before someone mentions it again, yes I do know about the bad positioning of the follow / unfollow button ;p
+- Before someone mentions it again, yes I do know about the bad positioning of the follow / unfollow button ;p
 
 - I used the Django shell (`manage.py shell`) to test my models during development. I should have utilized the unit testing tools from Django to standardize and automate the testing process. My bad...
 
