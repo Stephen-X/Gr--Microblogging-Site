@@ -15,6 +15,8 @@ Detailed documentations to be added later.
 
 - Heroku automatically collects static files during deployment, so you don't have to worry about that. Otherwise run `python manage.py collectstatic` to collects them to STATIC_ROOT after the debug mode is switched off. More info on [Django](https://docs.djangoproject.com/en/1.11/ref/contrib/staticfiles/).
 
+- Right now the website uses HTTP polling strategy to update the grumbles (messages) in a fixed interval (10s). This may not be an efficient solution for real-time message streams esp. for a social website. To be updated to WebSocket (e.g. Django Channels).
+
 
 ## Screenshots
 
