@@ -2,23 +2,21 @@
 
 url = "https://pypi.python.org/simple"
 verify_ssl = true
-name = "pypi"
 
 
 [packages]
 
-asgi-redis = "*"
-"boto3" = "*"
-django = "*"
-django-storages = "*"
-channels = "*"
-pillow = "*"
-"psycopg2" = "*"
-requests = "*"
-whitenoise = "*"
 dj-database-url = "*"
+django = "*"
+gunicorn = "*"
+"psycopg2" = "*"
+whitenoise = "*"
+requests = "*"
+Pillow = "*"
 python-decouple = "*"
+django-storages = "*"
+boto3 = "*"
 
+[requires]
 
-[dev-packages]
-
+python_version = "3.6"

@@ -29,9 +29,11 @@ function postMessage() {
         });
 }
 
-
 /**
  * Update the stream to keep up with the latest changes.
+ *
+ * Note: this method follows HTTP polling strategy; you'll need to repeatedly call this method in a fixed interval
+ * in order to update the grumbles stream. Use updateStreamWS() for real-time communications (WebSocket).
  */
 function updateStream() {
     var msgStream = $("#messages-stream");
@@ -40,9 +42,9 @@ function updateStream() {
 
     // determine the API address
     var apiUrl;
-    if (view == "profile") {
+    if (view === "profile") {
         apiUrl = "/api/get-messages/profile/" + profile_username + "/" + lastTimeUpdated;
-    } else if (view == "global") {
+    } else if (view === "global") {
         apiUrl = "/api/get-messages/global/" + lastTimeUpdated;
     } else {
         apiUrl = "/api/get-messages/follower/" + lastTimeUpdated;
@@ -60,16 +62,62 @@ function updateStream() {
             } else {
                 if (msgStream.data("isEmpty")) {  // clear that "No message" sentence
                     msgStream.html("");
+                    msgStream.data("isEmpty", false);
                 }
-                msgStream.data("isEmpty", false);
                 for (var i = 0; i < data.messages.length; i++) {
                     var message = data.messages[i];
-                    var message_html = $(message.html);
-                    message_html.data("message-id", message.id);  // each message element is labeled with its id
+                    // each message card is wrapped inside a div tag with a label attribute of its id;
+                    // useful for locating existing messages
+                    // Note: the advantage of setting the id explicitly rather than hiding it inside
+                    // jQuery's .data() is that you can search for the message page-wide using
+                    // jQuery's Attribute Equals Selector: $("div[data-grumble-id='" + id + "']")
+                    var message_html = $("<div class='grumble' data-grumble-id='" + message.id + "'>" + message.html + "</div>");
                     msgStream.prepend(message_html);  // add each message HTML code to the top of the list
                 }
             }
         });
+}
+
+/**
+ * Update message stream in real-time with WebSockets.
+ * Used in global / profile view.
+ */
+function updateStreamWS() {
+    var msgStream = $("#messages-stream");
+    var apiUrl = "/api/get-messages-stream/";
+    console.log("Connecting to global stream socket");  // TODO: for debugging
+
+    // use the WebSocket wrapper provided by Django Channels to simplify the calls
+    var webSocketBridge = new channels.WebSocketBridge();
+    webSocketBridge.connect(apiUrl);
+    webSocketBridge.listen(function(data) {
+
+        if (msgStream.data("isEmpty")) {  // clear that "No message" sentence
+            msgStream.html("");
+            msgStream.data("isEmpty", false);
+        }
+
+        if (view === "profile" && data.author !== profile_username) {
+            // if this is the profile page, pass grumbles that don't belong to the
+            // profile owner
+            return;
+        }
+
+        var content = data.html;  // html code of the new grumble
+        // search for existing grumble with the same id; replace if it exists,
+        // otherwise create new
+        var existingMsg = $("div[data-grumble-id='" + data.id + "']");
+        if (existingMsg.length) {
+            existingMsg.html(content);
+        } else {
+            var newMsg = $("<div class='grumble' data-grumble-id='" + data.id + "'>" + content + "</div>");
+            msgStream.prepend(newMsg);
+        }
+    });
+
+    // TODO: for debugging
+    webSocketBridge.socket.onopen = function() { console.log("Connected to global stream socket"); }
+    webSocketBridge.socket.onclose = function() { console.log("Disconnected to global stream socket"); }
 }
 
 /**
@@ -89,22 +137,38 @@ function modifyTotalGrumbles(amount) {
  */
 $(document).ready(function() {
     // add event-handlers
-    $('#msg-sent-btn').click(postMessage);
-    $('#autofocus_field').keypress(function(event) {
+    $("#msg-sent-btn").click(postMessage);
+    var autofocusField = $("#autofocus_field");
+    autofocusField.keypress(function(event) {
         // also post message when user presses enter key in the input field
-        if (event.which == 13) {  // 13 represents enter key press
+        if (event.which === 13) {  // 13 represents enter key press
             postMessage();
         }
     });
     $("#messages-stream").data("isEmpty", true);  // initially, the message stream doesn't contain any messages
 
     updateStream();  // view is a parameter indicating if this is global / follower view passed in from the template
-    $('#autofocus_field').focus();  // same as adding autofocus attribute to the element
+    autofocusField.focus();  // same as adding autofocus attribute to the element
 
-    // periodically update the stream every 10s
-    window.setInterval(function(){
-        updateStream();
-    }, 10000);
+
+    if (view !== "following") {
+        // update stream in real-time using WebSocket
+        updateStreamWS();
+    } else {
+        // periodically update the stream every 5s
+        // Note: HTTP Polling is used instead for the following page, because checking whether every
+        // new grumble is made by an author followed by the current user requires database searching;
+        // this will not scale well in real life where we have lots of new grumbles posted every second.
+        // The idea of creating a message group for each user which will be subscribed by all of his / her
+        // followers does not seem to scale well either, as many groups maintained on the server will
+        // definitely consume a large amount of resources.
+        // TODO: new plausible solution: query and store usernames of all following users in a set; use it to filter
+        // message stream locally.
+        window.setInterval(function(){
+            updateStream();
+        }, 5000);
+    }
+
 
     // -- pass CSRF token in every POST request using jQuery ----------------------
     // source: https://docs.djangoproject.com/en/1.11/ref/csrf/#ajax

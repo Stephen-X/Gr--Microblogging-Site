@@ -9,9 +9,9 @@
  * Post new comment to the backend, and update the frontend template respectively.
  */
 function postComment(event) {
-    var messageCard = $(event.target).parents(".msg-card");
+    var message = $(event.target).parents(".grumble");
     var input_field = $(event.target).parents(".input-group").find("input");
-    var msg_id = messageCard.data("message-id");
+    var msg_id = message.getAttribute("data-grumble-id");
     // find the target comment submit button that user clicked, then find its belonging message card,
     // and retrieve the message id data
     if (input_field.val()) {  // if use did input something, send the post request
@@ -20,7 +20,7 @@ function postComment(event) {
                 // clear the old input
                 input_field.val("");
                 // update the comment list
-                getComments(messageCard)
+                getComments(message)
             });
     }
 }
@@ -29,11 +29,11 @@ function postComment(event) {
  * Get all comments for the given message.
  * TODO: only gets the latest comments, like message updating.
  *
- * @param messageCard element with the .msg-card class
+ * @param message element with the .grumble class
  */
-function getComments(messageCard) {
-    var msg_id = messageCard.data("message-id");
-    var commentList = messageCard.find(".comment-list");
+function getComments(message) {
+    var msg_id = message.getAttribute("data-grumble-id");
+    var commentList = message.find(".comment-list");
     // get the last time this comment list is updated
     var lastTimeUpdated = (typeof commentList.data("last-updated") === "undefined") ? "" : commentList.data("last-updated");
 
@@ -57,7 +57,7 @@ $(document).ready(function() {
     $(document).on("click", ".comment-sent-btn", postComment);
     $(document).on("keypress", ".comment-input", function(event) {
         // also post comment when user presses enter key in the input field
-        if (event.which == 13) {  // 13 represents enter key press
+        if (event.which === 13) {  // 13 represents enter key press
             postComment(event);
         }
     });

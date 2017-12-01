@@ -9,6 +9,9 @@
 # Django database
 # db.sqlite3
 
+# Pipenv local environment
+.venv
+
 
 # Class-specific section #
 

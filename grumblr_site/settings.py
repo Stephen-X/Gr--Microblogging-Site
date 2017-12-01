@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'grumblr_register',  # app for user registration
     'grumblr_stream',  # app for the global / following page
     'grumblr_profile',  # app for the user profile page
+    'channels'
     # 'storages'  # needs its storage adapters to save to cloud storage services, e.g. AWS S3
 ]
 
@@ -101,8 +102,9 @@ TEMPLATES = [
                 # through URL, i.e. {{ MEDIA_URL }}
                 # TODO: this context processor doesn't work at all in Django 1.11; add this line to the end of
                 # urls.py instead: urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-                # with django.conf.settings and django.conf.urls.static.static()
+                # with imports: django.conf.settings and django.conf.urls.static.static()
                 'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -112,7 +114,26 @@ TEMPLATES = [
 
 # WSGI is the Python standard for web servers and applications;
 # it's Django's primary deployment platform
+# note: this is not used after Django Channels is enabled, as ASGI servers are used instead
 WSGI_APPLICATION = 'grumblr_site.wsgi.application'
+
+
+# define a default channel layer for Django Channels; Channel layer is the transport mechanism
+# that Channels uses to pass messages from producers to consumers
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            # either use the url from the `REDIS_HOST` environmental variable,
+            # or use the localhost address if `REDIS_HOST` is None
+            'hosts': [(os.environ.get('REDIS_HOST', 'localhost'), 6379)]
+        },
+        # similar to URL routing that maps URLs to view functions, channel routing
+        # maps channels to consumer functions; as indicated below, the routing logic
+        # is inside `routing.py`
+        'ROUTING': 'grumblr_site.routing.channel_routing'
+    }
+}
 
 
 # Database
@@ -156,7 +177,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# https://docs.djangoproject.com/en/1.11/ref/settings/#time-zone
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 

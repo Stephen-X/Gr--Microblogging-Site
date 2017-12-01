@@ -10,8 +10,10 @@ Remember to run <code>manage.py migrate</code> every time this file is modified.
 Author: Stephen Xie <[redacted]@cmu.edu>
 Version: 1.2.0
 """
+import json
 import logging
 
+from channels import Group
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -105,6 +107,21 @@ class Message(models.Model):
         # before python string formatter can be used
         # '%H:%M %p - %d %b %Y' example: 9:05 PM - 19 Oct 2017
         # Python strftime ref: http://strftime.org/
+
+    # override the save method to send real-time message updates to the global_stream group
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # send the trade record to the group; all consumers (aka "listeners") to that group
+        # will be notified
+        # WebSocket text frame, with JSON content
+        Group('global_stream').send({
+            'text': json.dumps({
+                'id': self.id,
+                'author': self.user.username,
+                'html': self.html
+            })
+        })
 
     @staticmethod
     def get_all_ranged(mrange=20, offset=0, from_date='1970-01-01T00:00+00:00'):
