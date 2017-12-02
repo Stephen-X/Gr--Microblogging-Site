@@ -22,7 +22,7 @@ function postMessage() {
             // add 1 to the total grumbles counter
             modifyTotalGrumbles(1);
 
-            updateStream();  // update the message stream
+            // updateStream();  // update the message stream
             // clear previous input content, then autofocus on input field again
             newMessage.val("");
             newMessage.focus();
@@ -108,8 +108,10 @@ function updateStreamWS() {
         // otherwise create new
         var existingMsg = $("div[data-grumble-id='" + data.id + "']");
         if (existingMsg.length) {
+            console.log("grumble exists!");
             existingMsg.html(content);
         } else {
+            console.log("grumble not exists!");
             var newMsg = $("<div class='grumble' data-grumble-id='" + data.id + "'>" + content + "</div>");
             msgStream.prepend(newMsg);
         }
@@ -162,8 +164,8 @@ $(document).ready(function() {
         // The idea of creating a message group for each user which will be subscribed by all of his / her
         // followers does not seem to scale well either, as many groups maintained on the server will
         // definitely consume a large amount of resources.
-        // TODO: new plausible solution: query and store usernames of all following users in a set; use it to filter
-        // message stream locally.
+        // TODO: new plausible solution: query and store usernames of all following users in a set on the client side;
+        // use it to filter message stream locally.
         window.setInterval(function(){
             updateStream();
         }, 5000);

@@ -1,20 +1,20 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "86179a769719d5e3742e50b25e357079f3e29ffc15b1ef1ca7769c68cde4395f"
+            "sha256": "52de7f4c3fa6a712d17959c431177f7428cd6588239c9f748d9f23a718ff2c30"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.6.3",
-            "os_name": "nt",
-            "platform_machine": "AMD64",
+            "implementation_version": "3.5.2",
+            "os_name": "posix",
+            "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "10",
-            "platform_system": "Windows",
-            "platform_version": "10.0.16299",
-            "python_full_version": "3.6.3",
-            "python_version": "3.6",
-            "sys_platform": "win32"
+            "platform_release": "4.4.0-43-Microsoft",
+            "platform_system": "Linux",
+            "platform_version": "#1-Microsoft Wed Dec 31 14:42:53 PST 2014",
+            "python_full_version": "3.5.2",
+            "python_version": "3.5",
+            "sys_platform": "linux"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -71,10 +71,10 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:267034da82529377f5b89e29fcec23f0addfde13b795e3c1cc0455947ba21e76",
-                "sha256:4c9831c0db7509315cc2b089bf6ee8edf22a7b9ca78d1401674217398cf6de42"
+                "sha256:ea67794478a3cd9001c3fa7dfcdf0aa90ab30858130041045ec8f9f90d3a2063",
+                "sha256:58db28effd55b603cb668065cf868804b7ff5680986b79516b5f48600d39819b"
             ],
-            "version": "==1.8.4"
+            "version": "==1.8.6"
         },
         "certifi": {
             "hashes": [

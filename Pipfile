@@ -18,6 +18,7 @@ requests = "*"
 whitenoise = "*"
 dj-database-url = "*"
 python-decouple = "*"
+twisted = {extras = ["tls", "http2"]}
 
 
 [dev-packages]

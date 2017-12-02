@@ -40,6 +40,11 @@ SECURE_BROWSER_XSS_FILTER = True
 # block the resource from loading in a frame no matter which site made the request
 X_FRAME_OPTIONS = 'DENY'
 
+# Note that you may not enable HTTPS redirect if you choose to use Django Channels and
+# also deployed to Heroku with free Heroku Redis hobby-dev plan. SSL for Heroku Redis is
+# only available on paid production tier plans, therefore enabling SECURE_SSL_REDIRECT
+# will cause the site to be stuck into an infinite redirect loop.
+
 # redirect all connections to HTTPS
 # SECURE_SSL_REDIRECT = True
 # ensure that the cookie is only sent under an HTTPS connection
@@ -67,7 +72,7 @@ INSTALLED_APPS = [
     'grumblr_register',  # app for user registration
     'grumblr_stream',  # app for the global / following page
     'grumblr_profile',  # app for the user profile page
-    'channels'
+    'channels',
     # 'storages'  # needs its storage adapters to save to cloud storage services, e.g. AWS S3
 ]
 
@@ -124,9 +129,9 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'asgi_redis.RedisChannelLayer',
         'CONFIG': {
-            # either use the url from the `REDIS_HOST` environmental variable,
-            # or use the localhost address if `REDIS_HOST` is None
-            'hosts': [(os.environ.get('REDIS_HOST', 'localhost'), 6379)]
+            # either use the url from the `REDIS_URL` environmental variable,
+            # or use the localhost address if `REDIS_URL` is None
+            'hosts': [(os.environ.get('REDIS_URL', 'localhost:6379'))]
         },
         # similar to URL routing that maps URLs to view functions, channel routing
         # maps channels to consumer functions; as indicated below, the routing logic
@@ -192,7 +197,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # in production mode, the static resources need to be reorganized before they can be deployed
 # run python manage.py collectstatic to move static resources to new location
-STATIC_ROOT = os.path.join(BASE_DIR, 'grumblr/staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'global_resources/staticfiles')
 # also the global static files directory
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'global_resources/static')
