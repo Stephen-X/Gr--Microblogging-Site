@@ -108,10 +108,8 @@ function updateStreamWS() {
         // otherwise create new
         var existingMsg = $("div[data-grumble-id='" + data.id + "']");
         if (existingMsg.length) {
-            console.log("grumble exists!");
             existingMsg.html(content);
         } else {
-            console.log("grumble not exists!");
             var newMsg = $("<div class='grumble' data-grumble-id='" + data.id + "'>" + content + "</div>");
             msgStream.prepend(newMsg);
         }
