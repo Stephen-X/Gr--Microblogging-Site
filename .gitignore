@@ -6,8 +6,8 @@
 # SASS cache files
 .sass-cache
 
-# Django database
-# db.sqlite3
+# Django SQLite database
+db.sqlite3
 
 # Pipenv local environment
 .venv
