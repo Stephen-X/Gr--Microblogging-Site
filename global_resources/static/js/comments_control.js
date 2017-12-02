@@ -11,7 +11,7 @@
 function postComment(event) {
     var message = $(event.target).parents(".grumble");
     var input_field = $(event.target).parents(".input-group").find("input");
-    var msg_id = message.getAttribute("data-grumble-id");
+    var msg_id = message.get(0).getAttribute("data-grumble-id");
     // find the target comment submit button that user clicked, then find its belonging message card,
     // and retrieve the message id data
     if (input_field.val()) {  // if use did input something, send the post request
@@ -32,7 +32,7 @@ function postComment(event) {
  * @param message element with the .grumble class
  */
 function getComments(message) {
-    var msg_id = message.getAttribute("data-grumble-id");
+    var msg_id = message.get(0).getAttribute("data-grumble-id");
     var commentList = message.find(".comment-list");
     // get the last time this comment list is updated
     var lastTimeUpdated = (typeof commentList.data("last-updated") === "undefined") ? "" : commentList.data("last-updated");
