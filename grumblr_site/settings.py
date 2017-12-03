@@ -84,7 +84,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # WhiteNoise is used to serve static files in production mode;
+    # WhiteNoise is used to serve static files locally in production mode;
     # check its documentation for setup details
     # 'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
@@ -131,7 +131,7 @@ CHANNEL_LAYERS = {
         'CONFIG': {
             # either use the url from the `REDIS_URL` environmental variable,
             # or use the localhost address if `REDIS_URL` is None
-            'hosts': [(os.environ.get('REDIS_URL', 'localhost:6379'))]
+            'hosts': [os.environ.get('REDIS_URL', 'localhost:6379')]
         },
         # similar to URL routing that maps URLs to view functions, channel routing
         # maps channels to consumer functions; as indicated below, the routing logic
