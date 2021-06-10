@@ -11,7 +11,7 @@ python_version = '3.6'
 
 asgi-redis = {version = ">=1.4,<1.5"}
 "boto3" = {version = ">=1.4,<1.5"}
-django = {version = ">=1.11,<2.0"}
+django = {version = ">=1.11,<3.0"}
 django-storages = {version = ">=1.6,<1.7"}
 channels = {version = ">=1.1,<1.2"}
 pillow = {version = ">=4.3,<4.4"}
